@@ -1,0 +1,35 @@
+package robotService.repositories;
+
+import robotService.entities.supplements.Supplement;
+
+import java.util.Collection;
+
+public class SupplementRepository implements Repository{
+    private Collection<Supplement> supplements;
+
+    public SupplementRepository(Collection<Supplement> supplements) {
+        this.supplements = supplements;
+    }
+
+    public SupplementRepository(SupplementRepository supplements) {
+    }
+
+    @Override
+    public void addSupplement(Supplement supplement) {
+        this.supplements.add(supplement);
+
+    }
+
+    @Override
+    public boolean removeSupplement(Supplement supplement) {
+        return this.supplements.remove(supplement);
+    }
+
+    @Override
+    public Supplement findFirst(String type) {
+        return this.supplements.stream()
+                .filter(supplement -> supplement.getClass()
+                        .getSimpleName().equals(type))
+                .findFirst().orElse(null);
+    }
+}
